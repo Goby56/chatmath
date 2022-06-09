@@ -16,9 +16,13 @@ public class ChatFieldListener {
 
 	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/gui/screen/ChatScreen;keyPressed" + "(III)Z")
 	private void init(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable callbackInfo) {
+
 		if (keyCode == 258) {
 			// The player pressed tab and wants to calculate the expression
-			ExpressionHandler.handleExpression(this.chatField);
-		};
+			ExpressionHandler.replaceExpression(this.chatField);
+		} else if (keyCode == 257) {
+			// The player pressed enter and any present expression should be evaluated
+			ExpressionHandler.evaluateAllExpressions(this.chatField);
+		}
 	};
 };

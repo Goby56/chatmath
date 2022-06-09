@@ -70,8 +70,8 @@ public class ExpressionHandler {
         field.setText(replacement);
     }
 
-    public static boolean isValidExpression(String expression) {
-        ExprLexer lexer = new ExprLexer(new ANTLRInputStream(expression));
+    public static boolean isValidExpression(String expr) {
+        ExprLexer lexer = new ExprLexer(new ANTLRInputStream(expr));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ExprParser parser = new ExprParser(tokens);
 

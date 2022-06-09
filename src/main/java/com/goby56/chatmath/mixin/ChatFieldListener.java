@@ -19,10 +19,11 @@ public class ChatFieldListener {
 
 		if (keyCode == 258) {
 			// The player pressed tab and wants to calculate the expression
-			ExpressionHandler.replaceExpression(this.chatField);
+			System.out.println(ExpressionHandler.isValidExpression(this.chatField.getText()));
+			//ExpressionHandler.replaceExpression(this.chatField);
 		} else if (keyCode == 257) {
 			// The player pressed enter and any present expression should be evaluated
-			ExpressionHandler.evaluateAllExpressions(this.chatField);
+			//ExpressionHandler.evaluateAllExpressions(this.chatField);
 		}
 	};
 };

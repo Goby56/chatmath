@@ -7,6 +7,7 @@ expr:   FuncitonName '(' expr ')'
     |   expr '+' expr
     |   expr '-' expr
     |   expr '/' expr
+    |   expr '^' expr
     |   Const
     |   Variable
     ;

@@ -1,7 +1,7 @@
 package com.goby56.chatmath;
 
-import com.goby56.chatmath.antlr.ExprLexer;
-import com.goby56.chatmath.antlr.ExprParser;
+import com.goby56.chatmath.antlr.ChatMathLexer;
+import com.goby56.chatmath.antlr.ChatMathParser;
 import com.goby56.chatmath.util.StringMethods;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -29,8 +29,6 @@ public class ExpressionHandler {
         currentExpression = currentExpression.replaceAll("x", String.valueOf(player.getX()));
         currentExpression = currentExpression.replaceAll("y", String.valueOf(player.getY()));
         currentExpression = currentExpression.replaceAll("z", String.valueOf(player.getZ()));
-
-        System.out.println(currentExpression);
 
         try {
             String result = new DecimalFormat("#.#").format(evaluateExpression(currentExpression));
@@ -71,17 +69,22 @@ public class ExpressionHandler {
     }
 
     public static boolean isValidExpression(String expr) {
-        ExprLexer lexer = new ExprLexer(new ANTLRInputStream(expr));
+        ChatMathLexer lexer = new ChatMathLexer(new ANTLRInputStream(expr));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        ExprParser parser = new ExprParser(tokens);
+        ChatMathParser parser = new ChatMathParser(tokens);
 
         parser.removeErrorListeners();
         parser.setErrorHandler(new BailErrorStrategy());
 
         try {
-            parser.expr();
-            return true;
+            parser.expression();
         }  catch (ParseCancellationException e) {
+            return false;
+        } finally {
+            String[] validCharacters = {"+", "-", "*", "/", "^"};
+            for (String character: validCharacters) {
+                if (expr.contains(character)) return true;
+            }
             return false;
         }
     }
